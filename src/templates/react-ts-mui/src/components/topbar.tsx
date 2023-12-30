@@ -11,7 +11,7 @@ export default function TopBar() {
     <AppBar position='sticky'>
       <Toolbar>
         <Typography variant='h5' flexGrow={1}>
-          Github Profile Searcher
+          App
         </Typography>
         <IconButton onClick={themeToggleContext.toggle}>
           {themeToggleContext.getMode() === 'light' ? (
