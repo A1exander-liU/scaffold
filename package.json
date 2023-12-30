@@ -4,6 +4,9 @@
   "description": "Personal cli for creating project templates",
   "type": "module",
   "main": "index.js",
+  "bin": {
+    "scaffold": "./dist/index.js"
+  },
   "scripts": {
     "build": "npx tsc",
     "build:dev": "npx tsc -w",
@@ -31,6 +34,7 @@
     "chalk": "^5.3.0",
     "commander": "^11.1.0",
     "figlet": "^1.7.0",
-    "fs-extra": "^11.2.0"
+    "fs-extra": "^11.2.0",
+    "tasuku": "^2.0.1"
   }
 }
