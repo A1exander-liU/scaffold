@@ -1,6 +1,8 @@
+#!/usr/bin/env node
+
 import figlet from 'figlet';
 import { Command } from 'commander';
-import { strings } from './strings.js';
+import { strings } from './util/strings.js';
 import react from './commands/react/react.command.js';
 
 const program = new Command();
