@@ -13,6 +13,6 @@ program
 
 program.addCommand(react);
 
-program.parse(process.argv);
+program.parseAsync(process.argv);
 
 export default program;
