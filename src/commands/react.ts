@@ -10,11 +10,16 @@ react
   .option('--js', 'Use JS intead of TS', false)
   .action((appName: string, options: ReactOptions) => {
     // callback(argument, options) note that option names will be camel cased
-    const noMui = options.NoMui;
-    const useJs = options.js;
-    console.log(chalk.blue(`Created react app: ${appName}`));
-    console.log(chalk.white(`Using MUI: ${!noMui}`));
-    console.log(chalk.white(`Using ${useJs ? 'JS' : 'TS'}`));
+    console.log(
+      chalk.white(
+        `Created react app => ${process.cwd()}\\${chalk.blue(appName)}`,
+      ),
+    );
+    console.log();
+    console.log(chalk.white('Starting steps:'));
+    console.log(chalk.white(`1. cd ${appName}`));
+    console.log(chalk.white(`1. npm install`));
+    console.log(chalk.white(`1. npm run dev`));
   });
 
 export default react;
