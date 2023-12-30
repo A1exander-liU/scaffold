@@ -23,6 +23,18 @@ export async function handleReactTemplates(appName: string) {
       await task('Initializing git repository', async () => {
         await initializeGit(appName);
       });
+
+      if (usingMui) {
+        await task('Installing React MUI', async () => {
+          await setupMui(appName);
+        });
+      }
     },
+  );
+}
+
+async function setupMui(appName: string) {
+  await execWithPromise(
+    `cd ${appName} && npm install @mui/material @emotion/react @emotion/styled @mui/icons-material`,
   );
 }
