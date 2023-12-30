@@ -16,12 +16,16 @@ export async function handleReactTemplates(appName: string) {
     `Scaffolding project in ${path.join(process.cwd(), appName)}`,
     async ({ task }) => {
       await task(`Generating initial template files`, async () => {
-        await execWithPromise(
-          `npm create vite@latest ${appName} -- --template react${
-            language === 'ts' ? '-ts' : ''
-          }`,
-        );
+        await generateInitialTemplate(appName, language);
       });
     },
+  );
+}
+
+async function generateInitialTemplate(appName: string, language: string) {
+  await execWithPromise(
+    `npm create vite@latest ${appName} -- --template react${
+      language === 'ts' ? '-ts' : ''
+    }`,
   );
 }
