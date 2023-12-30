@@ -2,10 +2,10 @@ import { confirm, select } from '@inquirer/prompts';
 import { strings } from '../../strings.js';
 
 export async function getInfo() {
-  const usingMui = await getUsingMui();
   const language = await getLanguage();
+  const usingMui = await getUsingMui();
 
-  return { usingMui, language };
+  return { language, usingMui };
 }
 
 async function getUsingMui() {
