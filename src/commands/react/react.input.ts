@@ -1,5 +1,5 @@
 import { confirm, select } from '@inquirer/prompts';
-import { strings } from '../../strings.js';
+import { strings } from '../../util/strings.js';
 
 export async function getInfo() {
   const language = await getLanguage();
