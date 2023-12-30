@@ -3,6 +3,7 @@ import { getInfo } from './react.input.js';
 import { execWithPromise } from '../../util/wrappers.js';
 import task from 'tasuku';
 import path from 'path';
+import { generateTemplate, initializeGit } from '../../util/templater.js';
 
 export async function handleReactTemplates(appName: string) {
   console.log(chalk.white('App Name:'), chalk.cyan(appName));
@@ -10,22 +11,18 @@ export async function handleReactTemplates(appName: string) {
   if (!usingMui) {
     return;
   }
-  // const current = import.meta.url.replace(/^file:\/\/\//, '');
 
   task(
     `Scaffolding project in ${path.join(process.cwd(), appName)}`,
     async ({ task }) => {
       await task(`Generating initial template files`, async () => {
-        await generateInitialTemplate(appName, language);
+        const destination = path.join(process.cwd(), appName);
+        await generateTemplate(`react-${language}-base`, destination);
+      });
+
+      await task('Initializing git repository', async () => {
+        await initializeGit(appName);
       });
     },
-  );
-}
-
-async function generateInitialTemplate(appName: string, language: string) {
-  await execWithPromise(
-    `npm create vite@latest ${appName} -- --template react${
-      language === 'ts' ? '-ts' : ''
-    }`,
   );
 }
