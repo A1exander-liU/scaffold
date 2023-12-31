@@ -17,15 +17,22 @@ export async function generateTemplate(template: string, dest: string) {
   await recursiveCopy(templatePath, dest, { excluded });
 }
 
-export async function generateMuiFiles(dest: string) {
+export async function generateMuiFiles(dest: string, language: string) {
   const template = templatePath();
-  const appFile = path.join(template, 'mui/App.tsx');
-  const mainFile = path.join(template, 'mui/main.tsx');
-  const topbarFile = path.join(template, 'mui/topbar.tsx');
+  const appFile = path.join(template, `mui/${language}/App.${language}x`);
+  const mainFile = path.join(template, `mui/${language}/main.${language}x`);
+  const topbarFile = path.join(template, `mui/${language}/topbar.${language}x`);
 
-  recursiveCopy(appFile, path.join(dest, 'src', 'App.tsx'));
-  recursiveCopy(mainFile, path.join(dest, 'src', 'main.tsx'));
-  recursiveCopy(topbarFile, path.join(dest, 'src', 'components', 'topbar.tsx'));
+  await fs.ensureFile(path.join(dest, 'src/components', `topbar.${language}x`));
+
+  await Promise.all([
+    recursiveCopy(appFile, path.join(dest, 'src', `App.${language}x`)),
+    recursiveCopy(mainFile, path.join(dest, 'src', `main.${language}x`)),
+    recursiveCopy(
+      topbarFile,
+      path.join(dest, 'src', 'components', `topbar.${language}x`),
+    ),
+  ]);
 }
 
 export async function initializeGit(appName: string) {
