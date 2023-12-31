@@ -17,11 +17,6 @@
     "template",
     "scaffolding"
   ],
-  "files": [
-    "dist/",
-    "templates/",
-    "README.md"
-  ],
   "author": "Alexander Liu",
   "license": "ISC",
   "devDependencies": {

@@ -1,0 +1,12 @@
+# Source Files
+src/
+
+# Configurations
+.eslintrc.js
+.prettierignore
+.prettierrc
+tsconfig.json
+
+package-lock.json
+
+!dist/
