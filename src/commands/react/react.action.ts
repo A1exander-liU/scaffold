@@ -31,7 +31,7 @@ export async function handleReactTemplates(appName: string) {
         });
 
         await task('Generating starter files', async () => {
-          await generateBaseMui(destination);
+          await generateBaseMui(destination, language);
         });
       });
     }
@@ -44,6 +44,6 @@ async function installMui(appName: string) {
   );
 }
 
-async function generateBaseMui(dest: string) {
-  await generateMuiFiles(dest);
+async function generateBaseMui(dest: string, language: string) {
+  await generateMuiFiles(dest, language);
 }
