@@ -1,7 +1,7 @@
 import chalk from 'chalk';
 import { getInfo } from './react.input.js';
 import { execWithPromise } from '../../util/wrappers.js';
-import task, { Task } from 'tasuku';
+import task from 'tasuku';
 import path from 'path';
 import {
   generateMuiFiles,
@@ -15,9 +15,13 @@ export async function handleReactTemplates(appName: string) {
 
   const destination = path.join(process.cwd(), appName);
 
-  task(`Scaffolding project in ${destination}`, async ({ task }) => {
+  task(`Scaffolding project in ${destination}`, async ({ task, setError }) => {
     await task(`Generating initial template files`, async () => {
-      await generateTemplate(`react-${language}-base`, destination);
+      try {
+        await generateTemplate(`react-${language}-base`, destination);
+      } catch (err) {
+        setError(err);
+      }
     });
 
     await task('Initializing git repository', async () => {
@@ -26,12 +30,20 @@ export async function handleReactTemplates(appName: string) {
 
     if (usingMui) {
       await task('Setting up React MUI', async ({ task }) => {
-        await task('Installing dependencies', async () => {
-          await installMui(appName, language);
+        await task('Installing dependencies', async ({ setError }) => {
+          try {
+            await installMui(appName, language);
+          } catch (err) {
+            setError(err);
+          }
         });
 
-        await task('Generating starter files', async () => {
-          await generateBaseMui(destination, language);
+        await task('Generating starter files', async ({ setError }) => {
+          try {
+            await generateBaseMui(destination, language);
+          } catch (err) {
+            setError(err);
+          }
         });
       });
     }
