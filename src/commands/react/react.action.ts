@@ -11,7 +11,7 @@ import {
 
 export async function handleReactTemplates(appName: string) {
   console.log(chalk.white('App Name:'), chalk.cyan(appName));
-  const { usingMui, language } = await getInfo();
+  const { usingMui, language, shouldInitGit } = await getInfo();
 
   const destination = path.join(process.cwd(), appName);
 
@@ -24,9 +24,11 @@ export async function handleReactTemplates(appName: string) {
       }
     });
 
-    await task('Initializing git repository', async () => {
-      await initializeGit(appName);
-    });
+    if (shouldInitGit) {
+      await task('Initializing git repository', async () => {
+        await initializeGit(appName);
+      });
+    }
 
     if (usingMui) {
       await task('Setting up React MUI', async ({ task }) => {
