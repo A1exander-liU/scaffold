@@ -1,5 +1,5 @@
 import ReactDOM from 'react-dom/client';
-import App from './App.tsx';
+import App from './App.jsx';
 import { CssBaseline, ThemeProvider, createTheme } from '@mui/material';
 import { createContext, useMemo, useState } from 'react';
 import Cookies from 'js-cookie';
@@ -8,7 +8,7 @@ const MODE_KEY = 'mode';
 
 export const ThemeToggleContext = createContext({
   toggle: () => {},
-  getMode: (): 'light' | 'dark' => {
+  getMode: () => {
     return 'light';
   },
 });
@@ -16,13 +16,13 @@ export const ThemeToggleContext = createContext({
 function ThemeWrapper() {
   const cookieMode = Cookies.get(MODE_KEY);
 
-  let initial: 'light' | 'dark' = 'light';
+  let initial = 'light';
 
   if (cookieMode === 'light' || cookieMode === 'dark') {
     initial = cookieMode;
   }
 
-  const [mode, setMode] = useState<'light' | 'dark'>(initial);
+  const [mode, setMode] = useState(initial);
 
   const theme = useMemo(() => {
     return createTheme({
@@ -61,4 +61,4 @@ function ThemeWrapper() {
   );
 }
 
-ReactDOM.createRoot(document.getElementById('root')!).render(<ThemeWrapper />);
+ReactDOM.createRoot(document.getElementById('root')).render(<ThemeWrapper />);
