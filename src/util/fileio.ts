@@ -6,16 +6,12 @@ export async function recursiveCopy(
   dest: string,
   options?: { excluded: string[] },
 ) {
-  try {
-    await fs.copy(src, dest, {
-      filter: (src, dest) => {
-        if (options && options.excluded.includes(path.basename(src))) {
-          return false;
-        }
-        return true;
-      },
-    });
-  } catch (err) {
-    console.log(err);
-  }
+  await fs.copy(src, dest, {
+    filter: (src, dest) => {
+      if (options && options.excluded.includes(path.basename(src))) {
+        return false;
+      }
+      return true;
+    },
+  });
 }
