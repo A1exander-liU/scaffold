@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Personal cli for creating project templates",
   "type": "module",
-  "main": "index.js",
+  "main": "./dist/index.js",
   "bin": {
     "scaffold": "./dist/index.js"
   },
