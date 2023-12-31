@@ -2,11 +2,12 @@ import fs from 'fs-extra';
 import path from 'path';
 import { recursiveCopy } from './fileio.js';
 import { execWithPromise } from './wrappers.js';
+import { fileURLToPath } from 'url';
 
 export const excluded = ['node_modules'];
 
 function templatePath() {
-  const current = import.meta.url.replace(/^file:\/\/\//, '');
+  const current = fileURLToPath(import.meta.url);
   const templatePath = path.join(current, '../../../templates');
   return templatePath;
 }
