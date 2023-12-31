@@ -4,9 +4,9 @@ Personal CLI for creating project templates
 ###### Quick Start
 Installation
 ```bash
-npm i -g @ricebowl/scaffold # Install globally
+npm i -g @rice-bowl/scaffold # Install globally
 
-npm i @ricebowl/scaffold # Install locally
+npm i @rice-bowl/scaffold # Install locally
 ```
 
 ###### Usage
