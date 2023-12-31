@@ -1,6 +1,6 @@
 {
   "name": "@rice-bowl/scaffold",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "Personal cli for creating project templates",
   "type": "module",
   "main": "./dist/index.js",
