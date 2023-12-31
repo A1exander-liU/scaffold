@@ -1,5 +1,5 @@
 import { useContext } from 'react';
-import { ThemeToggleContext } from './main';
+import { ThemeToggleContext } from '../main';
 import { AppBar, IconButton, Toolbar, Typography } from '@mui/material';
 import LightModeIcon from '@mui/icons-material/LightMode';
 import DarkModeIcon from '@mui/icons-material/DarkMode';
