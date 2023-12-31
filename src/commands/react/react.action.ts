@@ -3,8 +3,11 @@ import { getInfo } from './react.input.js';
 import { execWithPromise } from '../../util/wrappers.js';
 import task, { Task } from 'tasuku';
 import path from 'path';
-import { generateTemplate, initializeGit } from '../../util/templater.js';
-import figlet from 'figlet';
+import {
+  generateMuiFiles,
+  generateTemplate,
+  initializeGit,
+} from '../../util/templater.js';
 
 export async function handleReactTemplates(appName: string) {
   console.log(chalk.white('App Name:'), chalk.cyan(appName));
@@ -12,30 +15,35 @@ export async function handleReactTemplates(appName: string) {
 
   const destination = path.join(process.cwd(), appName);
 
-  task(
-    `Scaffolding project in ${path.join(process.cwd(), appName)}`,
-    async ({ task }) => {
-      await task(`Generating initial template files`, async () => {
-        await generateTemplate(`react-${language}-base`, destination);
-      });
+  task(`Scaffolding project in ${destination}`, async ({ task }) => {
+    await task(`Generating initial template files`, async () => {
+      await generateTemplate(`react-${language}-base`, destination);
+    });
 
-      await task('Initializing git repository', async () => {
-        await initializeGit(appName);
-      });
+    await task('Initializing git repository', async () => {
+      await initializeGit(appName);
+    });
 
-      if (usingMui) {
-        await task('Setting up React MUI', async ({ task }) => {
-          await task('Installing dependencies', async () => {
-            await installMui(appName);
-          });
+    if (usingMui) {
+      await task('Setting up React MUI', async ({ task }) => {
+        await task('Installing dependencies', async () => {
+          await installMui(appName);
         });
-      }
-    },
-  );
+
+        await task('Generating starter files', async () => {
+          await generateBaseMui(destination);
+        });
+      });
+    }
+  });
 }
 
 async function installMui(appName: string) {
   await execWithPromise(
-    `cd ${appName} && npm install @mui/material @emotion/react @emotion/styled @mui/icons-material`,
+    `cd ${appName} && npm install @mui/material @emotion/react @emotion/styled @mui/icons-material js-cookie`,
   );
+}
+
+async function generateBaseMui(dest: string) {
+  await generateMuiFiles(dest);
 }
