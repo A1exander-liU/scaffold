@@ -7,14 +7,13 @@ export const excluded = ['node_modules'];
 
 function templatePath() {
   const current = import.meta.url.replace(/^file:\/\/\//, '');
-  const templatePath = path.join(current, '../../../src/templates');
+  const templatePath = path.join(current, '../../../templates');
   return templatePath;
 }
 
 export async function generateTemplate(template: string, dest: string) {
-  const current = import.meta.url.replace(/^file:\/\/\//, '');
-  const templatePath = path.join(current, '../../../src/templates', template);
-  await recursiveCopy(templatePath, dest, { excluded });
+  const pathToTemplate = path.join(templatePath(), template);
+  await recursiveCopy(pathToTemplate, dest, { excluded });
 }
 
 export async function generateMuiFiles(dest: string, language: string) {
