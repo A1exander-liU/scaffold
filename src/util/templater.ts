@@ -14,6 +14,15 @@ function templatePath() {
 export async function generateTemplate(template: string, dest: string) {
   const pathToTemplate = path.join(templatePath(), template);
   await recursiveCopy(pathToTemplate, dest, { excluded });
+
+  /* 
+    the .gitignore are ignore from npm publishing, had to be renamed to .gitignore.template,
+    so when copying the template files they should be renamed back to .gitignore 
+  */
+  await fs.rename(
+    path.join(dest, '.gitignore.template'),
+    path.join(dest, '.gitignore'),
+  );
 }
 
 export async function generateMuiFiles(dest: string, language: string) {
