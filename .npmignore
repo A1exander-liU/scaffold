@@ -1,7 +1,3 @@
-# Source Files
 src/
-
 package-lock.json
-
 !dist/
-!.gitignore
