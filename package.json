@@ -42,5 +42,13 @@
     "figlet": "^1.7.0",
     "fs-extra": "^11.2.0",
     "tasuku": "^2.0.1"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/A1exander-liU/scaffold.git"
+  },
+  "bugs": {
+    "url": "https://github.com/A1exander-liU/scaffold/issues"
+  },
+  "homepage": "https://github.com/A1exander-liU/scaffold#readme"
 }
