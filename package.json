@@ -14,7 +14,13 @@
   },
   "keywords": [
     "cli",
-    "template"
+    "template",
+    "scaffolding"
+  ],
+  "files": [
+    "dist/",
+    "templates/",
+    "README.md"
   ],
   "author": "Alexander Liu",
   "license": "ISC",
