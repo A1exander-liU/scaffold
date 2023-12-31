@@ -27,7 +27,7 @@ export async function handleReactTemplates(appName: string) {
     if (usingMui) {
       await task('Setting up React MUI', async ({ task }) => {
         await task('Installing dependencies', async () => {
-          await installMui(appName);
+          await installMui(appName, language);
         });
 
         await task('Generating starter files', async () => {
@@ -38,10 +38,16 @@ export async function handleReactTemplates(appName: string) {
   });
 }
 
-async function installMui(appName: string) {
+async function installMui(appName: string, language: string) {
   await execWithPromise(
     `cd ${appName} && npm install @mui/material @emotion/react @emotion/styled @mui/icons-material js-cookie`,
   );
+
+  if (language === 'ts') {
+    await execWithPromise(
+      `cd ${appName} && npm install --save @types/js-cookie`,
+    );
+  }
 }
 
 async function generateBaseMui(dest: string, language: string) {
