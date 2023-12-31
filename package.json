@@ -1,5 +1,5 @@
 {
-  "name": "scaffold",
+  "name": "@ricebowl/scaffold",
   "version": "1.0.0",
   "description": "Personal cli for creating project templates",
   "type": "module",
