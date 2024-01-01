@@ -9,6 +9,8 @@ export async function handleNestTemplates(appName: string) {
   console.log(chalk.white('App Name:'), chalk.cyan(appName));
   const { usingPrisma, databaseProvider, shouldInitGit } = await getInfo();
 
+  console.log(databaseProvider);
+
   const destination = path.join(process.cwd(), appName);
 
   task(`Scaffolding project in ${destination}`, async ({ task, setError }) => {
@@ -56,6 +58,6 @@ async function installPrisma(appName: string) {
 
 async function initializePrisma(appName: string, databaseProvider: string) {
   await execWithPromise(
-    `cd ${appName} && npx prisma init --database-provider ${databaseProvider}`,
+    `cd ${appName} && npx prisma init --datasource-provider ${databaseProvider}`,
   );
 }
