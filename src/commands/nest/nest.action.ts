@@ -56,6 +56,6 @@ async function installPrisma(appName: string) {
 
 async function initializePrisma(appName: string, databaseProvider: string) {
   await execWithPromise(
-    `cd  ${appName} && npx prisma init --database-provider ${databaseProvider}`,
+    `cd ${appName} && npx prisma init --database-provider ${databaseProvider}`,
   );
 }
