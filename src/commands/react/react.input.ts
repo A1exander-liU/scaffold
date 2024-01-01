@@ -1,5 +1,6 @@
 import { confirm, select } from '@inquirer/prompts';
 import { strings } from '../../util/strings.js';
+import { getInitGit } from '../../util/input.js';
 
 export async function getInfo() {
   const language = await getLanguage();
@@ -31,17 +32,6 @@ async function getLanguage() {
           value: 'js',
         },
       ],
-    });
-  } catch (err) {
-    return;
-  }
-}
-
-async function getInitGit() {
-  try {
-    return await confirm({
-      message: strings.react.confirmInitGit,
-      default: true,
     });
   } catch (err) {
     return;
