@@ -4,6 +4,7 @@ import figlet from 'figlet';
 import { Command } from 'commander';
 import { strings } from './util/strings.js';
 import react from './commands/react/react.command.js';
+import nest from './commands/nest/nest.command.js';
 
 const program = new Command();
 
@@ -14,6 +15,7 @@ program
   .description('Personal CLI for creating project templates');
 
 program.addCommand(react);
+program.addCommand(nest);
 
 program.parseAsync(process.argv);
 
