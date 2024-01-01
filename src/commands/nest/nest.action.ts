@@ -12,7 +12,7 @@ export async function handleNestTemplates(appName: string) {
   const destination = path.join(process.cwd(), appName);
 
   task(`Scaffolding project in ${destination}`, async ({ task, setError }) => {
-    await task('Generating intitial template files', async () => {
+    await task('Generating initial template files', async () => {
       try {
         await generateTemplate('nest-base', destination);
       } catch (err) {
