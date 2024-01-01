@@ -1,5 +1,6 @@
 import { Separator, confirm, select } from '@inquirer/prompts';
 import { getInitGit } from '../../util/input.js';
+import { strings } from '../../util/strings.js';
 
 const databaseProviders = [
   { name: 'PostgreSQL', value: 'postgresql' },
@@ -12,7 +13,10 @@ const databaseProviders = [
 
 export async function getInfo() {
   const usingPrisma = await getUsingPrisma();
-  const databaseProvider = await selectDatabaseProvider();
+  let databaseProvider;
+  if (usingPrisma) {
+    databaseProvider = await selectDatabaseProvider();
+  }
   const shouldInitGit = await getInitGit();
 
   return { usingPrisma, databaseProvider, shouldInitGit };
@@ -20,7 +24,10 @@ export async function getInfo() {
 
 async function getUsingPrisma() {
   try {
-    return await confirm({ message: '', default: true });
+    return await confirm({
+      message: strings.nest.confirmPrisma,
+      default: true,
+    });
   } catch (err) {
     return;
   }
@@ -29,7 +36,7 @@ async function getUsingPrisma() {
 async function selectDatabaseProvider() {
   try {
     return await select({
-      message: '',
+      message: strings.nest.selectDatabase,
       choices: databaseProviders,
     });
   } catch (err) {
