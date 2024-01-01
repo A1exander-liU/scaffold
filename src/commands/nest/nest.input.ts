@@ -1,8 +1,8 @@
-import { Separator, confirm, select } from '@inquirer/prompts';
+import { confirm, select } from '@inquirer/prompts';
 import { getInitGit } from '../../util/input.js';
 import { strings } from '../../util/strings.js';
 
-const databaseProviders = [
+const datasourceProviders = [
   { name: 'PostgreSQL', value: 'postgresql' },
   { name: 'SQLite', value: 'sqlite' },
   { name: 'MySQL', value: 'mysql' },
@@ -13,13 +13,13 @@ const databaseProviders = [
 
 export async function getInfo() {
   const usingPrisma = await getUsingPrisma();
-  let databaseProvider;
+  let datasourceProvider;
   if (usingPrisma) {
-    databaseProvider = await selectDatabaseProvider();
+    datasourceProvider = await selectDatabaseProvider();
   }
   const shouldInitGit = await getInitGit();
 
-  return { usingPrisma, databaseProvider, shouldInitGit };
+  return { usingPrisma, datasourceProvider, shouldInitGit };
 }
 
 async function getUsingPrisma() {
@@ -36,8 +36,8 @@ async function getUsingPrisma() {
 async function selectDatabaseProvider() {
   try {
     return await select({
-      message: strings.nest.selectDatabase,
-      choices: databaseProviders,
+      message: strings.nest.selectDatasource,
+      choices: datasourceProviders,
     });
   } catch (err) {
     return;

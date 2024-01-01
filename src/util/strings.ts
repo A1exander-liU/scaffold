@@ -6,7 +6,7 @@ export const strings = {
   },
   nest: {
     confirmPrisma: 'Do you want to use Prisma?',
-    selectDatabase: 'Which database do you want to use?',
+    selectDatasource: 'Select datasource for Prisma',
   },
   common: {
     confirmInitGit: 'Do you want to initialize it as a git repository?',

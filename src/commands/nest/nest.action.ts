@@ -7,9 +7,7 @@ import { execWithPromise } from '../../util/wrappers.js';
 
 export async function handleNestTemplates(appName: string) {
   console.log(chalk.white('App Name:'), chalk.cyan(appName));
-  const { usingPrisma, databaseProvider, shouldInitGit } = await getInfo();
-
-  console.log(databaseProvider);
+  const { usingPrisma, datasourceProvider, shouldInitGit } = await getInfo();
 
   const destination = path.join(process.cwd(), appName);
 
@@ -40,7 +38,7 @@ export async function handleNestTemplates(appName: string) {
 
         await task('Initializing Prisma', async () => {
           try {
-            await initializePrisma(appName, databaseProvider);
+            await initializePrisma(appName, datasourceProvider);
           } catch (err) {
             setError(err);
           }
@@ -56,8 +54,8 @@ async function installPrisma(appName: string) {
   );
 }
 
-async function initializePrisma(appName: string, databaseProvider: string) {
+async function initializePrisma(appName: string, datasourceProvider: string) {
   await execWithPromise(
-    `cd ${appName} && npx prisma init --datasource-provider ${databaseProvider}`,
+    `cd ${appName} && npx prisma init --datasource-provider ${datasourceProvider}`,
   );
 }
