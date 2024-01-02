@@ -4,7 +4,7 @@ import { recursiveCopy } from './fileio.js';
 import { execWithPromise } from './wrappers.js';
 import { fileURLToPath } from 'url';
 
-export const excluded = ['node_modules'];
+export const excluded = ['node_modules', 'dist'];
 
 export function templatePath() {
   const current = fileURLToPath(import.meta.url);
