@@ -18,8 +18,8 @@ export async function handleNestTemplates(appName: string) {
 
   const destination = path.join(process.cwd(), appName);
 
-  task(`Scaffolding project in ${destination}`, async ({ task, setError }) => {
-    await task('Generating initial template files', async () => {
+  task(`Scaffolding project in ${destination}`, async ({ task }) => {
+    await task('Generating initial template files', async ({ setError }) => {
       try {
         await generateTemplate('nest-base', destination);
       } catch (err) {
@@ -28,14 +28,16 @@ export async function handleNestTemplates(appName: string) {
     });
 
     if (shouldInitGit) {
-      await task('Initializing git repository', async () => {
-        await initializeGit(appName);
+      await task('Initializing git repository', async ({ setError }) => {
+        try {
+          await initializeGit(appName);
+        } catch (err) {}
       });
     }
 
     if (usingPrisma) {
       await task('Setting up Prisma', async ({ task }) => {
-        await task('Installing dependencies', async () => {
+        await task('Installing dependencies', async ({ setError }) => {
           try {
             await installPrisma(appName);
           } catch (err) {
@@ -43,7 +45,7 @@ export async function handleNestTemplates(appName: string) {
           }
         });
 
-        await task('Initializing Prisma', async () => {
+        await task('Initializing Prisma', async ({ setError }) => {
           try {
             await initializePrisma(appName, datasourceProvider);
           } catch (err) {
@@ -51,7 +53,7 @@ export async function handleNestTemplates(appName: string) {
           }
         });
 
-        await task('Generating starter files', async () => {
+        await task('Generating starter files', async ({ setError }) => {
           try {
             await setupPrismaBase(destination);
           } catch (err) {
@@ -95,4 +97,8 @@ async function setupPrismaBase(dest: string) {
   newContent = await addImport(newContent, options, newImport);
 
   await fs.writeFile(path.join(dest, 'src/app.module.ts'), newContent);
+
+  await execWithPromise(
+    `cd ${path.join(dest, 'src')} && npx prettier app.module.ts --write`,
+  );
 }
