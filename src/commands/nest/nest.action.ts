@@ -2,8 +2,15 @@ import chalk from 'chalk';
 import { getInfo } from './nest.input.js';
 import path from 'path';
 import task from 'tasuku';
-import { generateTemplate, initializeGit } from '../../util/templater.js';
+import {
+  generatePrismaFiles,
+  generateTemplate,
+  initializeGit,
+} from '../../util/templater.js';
 import { execWithPromise } from '../../util/wrappers.js';
+import { addIdentifierToDecoratorArray, addImport } from '../../util/ast.js';
+import { ParserOptions } from '@babel/parser';
+import fs from 'fs-extra';
 
 export async function handleNestTemplates(appName: string) {
   console.log(chalk.white('App Name:'), chalk.cyan(appName));
@@ -43,6 +50,14 @@ export async function handleNestTemplates(appName: string) {
             setError(err);
           }
         });
+
+        await task('Generating starter files', async () => {
+          try {
+            await setupPrismaBase(destination);
+          } catch (err) {
+            setError(err);
+          }
+        });
       });
     }
   });
@@ -58,4 +73,26 @@ async function initializePrisma(appName: string, datasourceProvider: string) {
   await execWithPromise(
     `cd ${appName} && npx prisma init --datasource-provider ${datasourceProvider}`,
   );
+}
+
+async function setupPrismaBase(dest: string) {
+  await generatePrismaFiles(dest);
+
+  const options: ParserOptions = {
+    sourceType: 'module',
+    plugins: ['typescript', 'decorators'],
+  };
+
+  const newImport = "import { PrismaModule } from './prisma/prisma.module'";
+
+  let newContent = await addIdentifierToDecoratorArray(
+    path.join(dest, 'src/app.module.ts'),
+    options,
+    'imports',
+    'PrismaModule',
+  );
+
+  newContent = await addImport(newContent, options, newImport);
+
+  await fs.writeFile(path.join(dest, 'src/app.module.ts'), newContent);
 }
