@@ -15,8 +15,8 @@ export async function handleReactTemplates(appName: string) {
 
   const destination = path.join(process.cwd(), appName);
 
-  task(`Scaffolding project in ${destination}`, async ({ task, setError }) => {
-    await task(`Generating initial template files`, async () => {
+  task(`Scaffolding project in ${destination}`, async ({ task }) => {
+    await task(`Generating initial template files`, async ({ setError }) => {
       try {
         await generateTemplate(`react-${language}-base`, destination);
       } catch (err) {
@@ -25,8 +25,12 @@ export async function handleReactTemplates(appName: string) {
     });
 
     if (shouldInitGit) {
-      await task('Initializing git repository', async () => {
-        await initializeGit(appName);
+      await task('Initializing git repository', async ({ setError }) => {
+        try {
+          await initializeGit(appName);
+        } catch (err) {
+          setError(err);
+        }
       });
     }
 
