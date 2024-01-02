@@ -6,7 +6,7 @@ import { fileURLToPath } from 'url';
 
 export const excluded = ['node_modules'];
 
-function templatePath() {
+export function templatePath() {
   const current = fileURLToPath(import.meta.url);
   const templatePath = path.join(current, '../../../templates');
   return templatePath;
@@ -42,6 +42,13 @@ export async function generateMuiFiles(dest: string, language: string) {
       path.join(dest, 'src', 'components', `topbar.${language}x`),
     ),
   ]);
+}
+
+export async function generatePrismaFiles(dest: string) {
+  const template = templatePath();
+  const prismaDirectory = path.join(template, 'nest/prisma');
+
+  await recursiveCopy(prismaDirectory, path.join(dest, 'src/prisma'));
 }
 
 export async function initializeGit(appName: string) {
