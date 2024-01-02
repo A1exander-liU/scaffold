@@ -11,7 +11,7 @@ const program = new Command();
 console.log(figlet.textSync(strings.title));
 
 program
-  .version('1.1.0', '-v, --version', 'Get the current Scaffold version')
+  .version('1.2.0', '-v, --version', 'Get the current Scaffold version')
   .description('Personal CLI for creating project templates');
 
 program.addCommand(react);
